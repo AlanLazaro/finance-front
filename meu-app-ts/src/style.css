@@ -8,14 +8,26 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-/* Variáveis de cor para facilitar a manutenção */
+/* Variáveis de cor para facilitar a manutenção - Light Mode */
 :root {
-  --bg-dark: #0f0f11;
-  --bg-panel: #1a1a1f;
-  --text-main: #f0f0f0;
-  --text-muted: #a0a0a0;
-  --purple-primary: red;
-  --purple-hover: #9b4dff;
+  --bg-dark: #f1f1f1;
+  --bg-panel: #eadef1;
+  --text-main: #3d0262;
+  --text-muted: #3d0262;
+  --purple-primary: #fdd71c;
+  --purple-hover: #eadef1;
+  --border-color: #3d0262;
+}
+
+/* Dark Mode */
+:root[data-theme="dark"] {
+  --bg-dark: #0f0f1a;
+  --bg-panel: #1a0f2e;
+  --text-main: #e8d5ff;
+  --text-muted: #b8a8c8;
+  --purple-primary: #fdd71c;
+  --purple-hover: #3d1f5c;
+  --border-color: #6b4a9a;
 }
 
 body {
@@ -23,6 +35,7 @@ body {
   color: var(--text-main);
   height: 100vh;
   overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #app-container {
@@ -35,10 +48,11 @@ body {
   width: 260px;
   background-color: var(--bg-panel);
   padding: 2rem 1rem;
-  border-right: 2px solid #2a2a35;
+  border-right: 2px solid var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .sidebar h2 {
@@ -46,6 +60,49 @@ body {
   text-align: center;
   font-size: 1.5rem;
   font-family: 'Fredoka', sans-serif;
+}
+
+/* Sidebar Header com Toggle */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-header h2 {
+  flex: 1;
+  margin: 0;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--purple-primary);
+  background-color: transparent;
+  color: var(--purple-primary);
+  font-size: 0.6rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  background-color: var(--purple-primary);
+  color: var(--bg-panel);
+  transform: scale(1.15);
+}
+
+.theme-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
 
 .sidebar ul {
@@ -60,9 +117,9 @@ body {
   padding: 0.8rem 1rem;
   background: transparent;
   border: none;
-  border-radius: 8px;
+  border-radius: 50px;
   color: var(--text-muted);
-  text-align: left;
+  text-align: justify;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -84,6 +141,8 @@ body {
   flex: 1;
   padding: 3rem;
   overflow-y: auto;
+  background-color: var(--bg-panel);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #content h1 {
@@ -96,12 +155,357 @@ body {
   color: rgb(61, 2, 98);
   font-size: 2rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin: 0;
   font-family: 'Fredoka', sans-serif;
+}
 
+:root[data-theme="dark"] .sidebar .title-good-for-you {
+  color: var(--purple-primary);
 }
 
 #content p {
   color: var(--text-muted);
   line-height: 1.6;
+}
+
+/* Contact Form Styles */
+.contact-form {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-main);
+  font-family: 'Fredoka', sans-serif;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="email"],
+.outros-textarea {
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="email"]:focus,
+.outros-textarea:focus {
+  outline: none;
+  border-color: var(--purple-primary);
+  box-shadow: 0 0 8px rgba(253, 215, 28, 0.3);
+}
+
+.objectives-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-dark);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--purple-primary);
+}
+
+.outros-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-btn {
+  padding: 0.9rem 2rem;
+  background-color: var(--purple-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(253, 215, 28, 0.3);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Contact Page Header */
+#content h1 {
+  margin-bottom: 0;
+  color: var(--text-main);
+  font-family: 'Fredoka', sans-serif;
+}
+
+.contato-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.contato-header h1 {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.social-links-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.social-links-header h3 {
+  color: var(--text-main);
+  font-family: 'Fredoka', sans-serif;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.contato-container {
+  display: flex;
+  gap: 3rem;
+  align-items: stretch;
+  min-height: calc(100vh - 300px);
+}
+
+.contact-form {
+  flex: 0 0 auto;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contato-sidebar {
+  flex: 0 0 30%;
+  background-color: var(--bg-panel);
+  border-left: 2px solid var(--border-color);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .contato-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .contato-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    min-height: auto;
+  }
+
+  .contato-sidebar {
+    border-left: none;
+    border-top: 2px solid var(--border-color);
+    padding: 2rem;
+  }
+
+  .social-links-header {
+    align-items: flex-start;
+  }
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  color: var(--text-main);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  color: var(--purple-primary);
+  border-color: var(--purple-primary);
+  box-shadow: 0 4px 12px rgba(253, 215, 28, 0.2);
+}
+
+.social-link svg {
+  width: 19px;
+  height: 19px;
+}
+
+.social-link.instagram:hover {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #fff;
+  border-color: transparent;
+}
+
+.social-link.tiktok:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: transparent;
+}
+
+
+
+
+
+/* =========================================
+   2. NOVO LAYOUT INTERNO (TESTE 80% / 20%)
+========================================= */
+
+.pagina-interna-container {
+  display: flex;
+  width: 100%;  /* Preenche toda a largura livre do #content */
+  height: 100%; /* Preenche toda a altura livre */
+}
+
+/* Coluna da Esquerda: 80% */
+.teste-coluna-esquerda {
+  flex: 0 0 80%; /* Garante exatamente 80% do espaço */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem; /* Espaçamento interno para não colar nas bordas */
+  box-sizing: border-box;
+}
+
+/* Painel Extra (Direita): 20% */
+.teste-painel-lateral {
+  flex: 0 0 20%; /* Garante os 20% restantes */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza o botão e textos horizontalmente */
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Elementos internos da esquerda (Cabeçalho e Form) */
+.teste-header {
+  display: flex;
+  justify-content: space-between; /* Título na esquerda, redes na direita */
+  align-items: center;
+  width: 100%;
+}
+
+.teste-formulario {
+  flex: 1; /* Ocupa toda a altura que sobrar abaixo do cabeçalho */
+  width: 100%;
+  padding: 2rem; /* Dá um respiro interno ao formulário */
+}
+
+/* Ajuste do botão de tema movido para o painel */
+.theme-toggle-painel {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--purple-primary);
+  background-color: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem; /* Empurra o restante do conteúdo para baixo */
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-painel:hover {
+  background-color: var(--purple-primary);
+  transform: scale(1.1);
+}
+
+
+/* =========================================
+   3. CORES DE VALIDAÇÃO (VISUAL)
+========================================= */
+
+/* Fundo verde claro para a área do cabeçalho */
+.bg-green { 
+  background-color: #b3ffb3; 
+  border: 2px dashed #009900; 
+  color: #333; 
+}
+
+/* Fundo verde escuro para o título */
+.bg-dark-green { 
+  background-color: #33cc33; 
+  padding: 1rem; 
+  color: white; 
+}
+
+/* Fundo amarelo para a área das redes sociais */
+.bg-yellow { 
+  background-color: #ffff99; 
+  border: 2px dashed #cccc00; 
+  padding: 1rem; 
+  color: #333; 
+}
+
+/* Fundo azul para a área principal (Formulário) */
+.bg-blue { 
+  background-color: #b3d9ff; 
+  border: 2px dashed #0066cc; 
+  color: #333; 
+}
+
+/* Fundo roxo para o Painel Extra (onde fica o botão lua/sol) */
+.bg-purple { 
+  background-color: #e6b3ff; 
+  border: 2px dashed #9900cc; 
+  color: #333; 
+}
+
+/* Fundo cinzento para debugs gerais */
+.bg-gray { 
+  background-color: #f0f0f0; 
+  border: 4px solid #333; 
+  color: #333; 
 }
