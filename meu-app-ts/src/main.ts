@@ -1,9 +1,8 @@
 // Importa as páginas
-import { homePage } from './pages/home';
-import { dashboardPage } from './pages/dashboard';
-import { cursosPage } from './pages/cursos';
-import { contatoPage, initContatoForm } from './pages/contato';
-import { testeLayoutPage } from './pages/testeLayoutPage';
+import { homePage, initContatoForm as initHome } from './pages/home';
+import { dashboardPage, initContatoForm as initDashboard } from './pages/dashboard';
+import { cursosPage, initContatoForm as initCursos } from './pages/cursos';
+import { contatoPage, initContatoForm as initContato } from './pages/contato';
 
 // Define o conteúdo de cada "página"
 const pages: Record<string, string> = {
@@ -11,7 +10,14 @@ const pages: Record<string, string> = {
   dashboard: dashboardPage,
   cursos: cursosPage,
   contato: contatoPage,
-  testeLayoutPage: testeLayoutPage
+};
+
+// Define funções de inicialização de cada página
+const pageInitFunctions: Record<string, () => void> = {
+  home: initHome,
+  dashboard: initDashboard,
+  cursos: initCursos,
+  contato: initContato
 };
 
 // Seleciona os elementos do DOM
@@ -52,6 +58,9 @@ if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', toggleTheme);
 }
 
+// Escuta eventos customizados de toggle de tema das páginas
+document.addEventListener('toggleTheme', toggleTheme);
+
 // Inicializa o tema ao carregar a página
 applyTheme(getCurrentTheme());
 
@@ -73,8 +82,9 @@ function navigateTo(pageId: string) {
   });
 
   // Inicializa scripts específicos da página
-  if (pageId === 'contato') {
-    initContatoForm();
+  const initFunction = pageInitFunctions[pageId];
+  if (initFunction) {
+    initFunction();
   }
 }
 
